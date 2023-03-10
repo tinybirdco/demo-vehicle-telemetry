@@ -1,0 +1,14 @@
+# Data Source created from Pipe 'mat_json_extract'
+
+SCHEMA >
+    `timestamp` DateTime,
+    `client_name` String,
+    `vehicle_id` Int32,
+    `license_plate` String,
+    `speed_mph` Int64,
+    `geo_location` Array(String),
+    `idling` Int64
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(timestamp)"
+ENGINE_SORTING_KEY "timestamp, client_name"

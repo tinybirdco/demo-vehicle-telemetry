@@ -1,0 +1,20 @@
+NODE mv
+SQL >
+
+    SELECT
+        timestamp,
+        client_name,
+        vehicle_id,
+        license_plate,
+        JSONExtractInt(event, 'speed_mph') AS speed_mph,
+        JSONExtractArrayRaw(event, 'geo_location') AS geo_location,
+        JSONExtractInt(event, 'idling') AS idling
+    FROM kafka_events
+    JOIN vehicle_hier USING vehicle_id
+
+TYPE materialized
+DATASOURCE mv_events
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(timestamp)"
+ENGINE_SORTING_KEY "timestamp, client_name"
+

@@ -1,0 +1,11 @@
+# Data Source created from Pipe 'mat_vehicle_details'
+
+SCHEMA >
+    `vehicle_id` Int32,
+    `client_name` String,
+    `license_plate` String,
+    `max_speed` SimpleAggregateFunction(max, Int64),
+    `latest_location` AggregateFunction(argMax, Array(String), DateTime)
+
+ENGINE "AggregatingMergeTree"
+ENGINE_SORTING_KEY "client_name, vehicle_id, license_plate"

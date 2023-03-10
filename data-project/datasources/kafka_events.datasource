@@ -1,0 +1,23 @@
+
+SCHEMA >
+    `__value` String,
+    `__topic` LowCardinality(String),
+    `__partition` Int16,
+    `__offset` Int64,
+    `__timestamp` DateTime,
+    `__key` String,
+    `event` String `json:$.event`,
+    `timestamp` DateTime `json:$.timestamp`,
+    `vehicle_id` Int32 `json:$.vehicle_id`
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(__timestamp)"
+ENGINE_SORTING_KEY "__timestamp"
+
+KAFKA_CONNECTION_NAME 'tb_server'
+KAFKA_TOPIC 'demo_telemetry'
+KAFKA_GROUP_ID 'demo_telemetry_1678396052349'
+KAFKA_AUTO_OFFSET_RESET 'latest'
+KAFKA_STORE_RAW_VALUE 'False'
+KAFKA_TARGET_PARTITIONS 'auto'
+KAFKA_KEY_AVRO_DESERIALIZATION ''

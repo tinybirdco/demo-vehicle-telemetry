@@ -1,0 +1,26 @@
+TOKEN "dashboard_token" READ
+
+TOKEN "api_vehicle_details_endpoint_read_3854" READ
+
+NODE endpoint
+SQL >
+
+    %
+    SELECT
+        vehicle_id,
+        client_name,
+        license_plate,
+        max(max_speed) AS max_speed,
+        argMaxMerge(latest_location) AS latest_location
+    FROM mv_vehicle_details_2
+    WHERE 1
+        {% if name != 'All' %}
+            AND client_name
+            =
+            {{ String(name, 'Chavez, Gray and Walker', description="Client name") }}
+        {% end %}
+    GROUP BY vehicle_id, client_name, license_plate
+
+    LIMIT 10
+
+

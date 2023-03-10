@@ -1,0 +1,24 @@
+TOKEN "api_trend_endpoint_read_2862" READ
+
+TOKEN "dashboard_token" READ
+
+NODE endpoint
+SQL >
+
+    %
+    SELECT
+        toStartOfMinute(timestamp) AS ts,
+        uniq(vehicle_id) n_vehicles,
+        count() AS n_events
+    FROM mv_events
+    WHERE
+        toDate(timestamp) = today()
+        {% if name != 'All' %}
+            AND client_name
+            =
+            {{ String(name, 'Chavez, Gray and Walker', description="Client name") }}
+        {% end %}
+    GROUP BY ts
+    ORDER BY ts
+
+

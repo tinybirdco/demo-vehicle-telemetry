@@ -1,0 +1,12 @@
+TOKEN "api_ui_filter_endpoint_read_7654" READ
+
+TOKEN "dashboard_token" READ
+
+NODE name_
+SQL >
+
+    SELECT 'All' AS name
+    UNION ALL
+    SELECT DISTINCT client_name name FROM vehicle_hier
+
+

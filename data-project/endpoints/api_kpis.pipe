@@ -1,0 +1,22 @@
+TOKEN "api_avg_speed_endpoint_read_1629" READ
+
+TOKEN "dashboard_token" READ
+
+NODE endpoint
+SQL >
+
+    %
+    SELECT
+        count() as events,
+        round(avg(speed_mph),2) AS speed,
+        round((countIf(idling = 1) / count()) * 100,2) AS idle
+    FROM mv_events
+    WHERE
+        toDate(timestamp) = today()
+        {% if name != 'All' %}
+            AND client_name
+            =
+            {{ String(name, 'Chavez, Gray and Walker', description="Client name") }}
+        {% end %}
+
+

@@ -1,0 +1,20 @@
+NODE mv
+SQL >
+
+    SELECT
+        vehicle_id,
+        client_name,
+        license_plate,
+        maxSimpleState(speed_mph) AS max_speed,
+        argMaxState(geo_location, timestamp) AS latest_location
+    FROM mv_events
+    GROUP BY
+        vehicle_id,
+        client_name,
+        license_plate
+
+TYPE materialized
+DATASOURCE mv_vehicle_details
+ENGINE "AggregatingMergeTree"
+ENGINE_SORTING_KEY "client_name, vehicle_id, license_plate"
+

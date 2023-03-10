@@ -1,0 +1,8 @@
+
+SCHEMA >
+    `client_name` String,
+    `vehicle_id` Int32,
+    `license_plate` String
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY "client_name, vehicle_id, license_plate"
