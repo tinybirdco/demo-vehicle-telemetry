@@ -58,7 +58,7 @@ def produce(topic,
       speeds = random.randint(20,80)
       long = fake.longitude()
       lat = fake.latitude()
-      idling = random.randint(0,1)
+      idling = random.choices([0,1],[5,1])
       
       message = {
         'vehicle_id': random.randint(1000000,1004164),

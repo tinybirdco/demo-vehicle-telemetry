@@ -19,6 +19,7 @@ import {
 } from '@tremor/react';
 import { useState, useEffect, SetStateAction } from 'react';
 import { SignalIcon, TruckIcon, BellSnoozeIcon } from '@heroicons/react/24/solid';
+import Head from 'next/head';
 
 const TINYBIRD_HOST = process.env.NEXT_PUBLIC_TINYBIRD_HOST;
 const TINYBIRD_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN;
@@ -73,8 +74,13 @@ export default function Dashboard() {
   };
 
   return (
+    <>
+    <Head>
+        <title>Vehicle Telemetry</title>
+    </Head>
+
       <main className="bg-slate-50 p-6 sm:p-10">
-          
+
           <Flex justifyContent="justify-between" alignItems="items-center">
               <Title>Vehicle Telemetry</Title>
               <Dropdown
@@ -82,8 +88,9 @@ export default function Dashboard() {
                   onValueChange={ (value) => setFilter(value) }
                   maxWidth="max-w-sm"
               >
-                  { names.map(item => 
+                  { (names?? []).map(item => 
                       <DropdownItem
+                          key={ item.name }
                           value={ item.name }
                           text={ item.name }
                       />
@@ -177,5 +184,6 @@ export default function Dashboard() {
 
           
       </main>
+    </>
   );
 }
